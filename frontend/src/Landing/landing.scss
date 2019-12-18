@@ -1,0 +1,17 @@
+.less{
+	margin: auto;
+	padding: auto;
+	width: 50vw;
+	
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.bg-landing{
+	background: #34495e;
+	position: relative;
+	min-height: 100vh;
+	height: calc(100%);
+}

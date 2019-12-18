@@ -1,0 +1,49 @@
+{
+  "name": "social",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.7.1",
+    "@material-ui/icons": "^4.5.1",
+    "axios": "^0.19.0",
+    "create-react-class": "^15.6.3",
+    "formik": "^2.0.3",
+    "moment": "^2.24.0",
+    "react": "^16.11.0",
+    "react-bootstrap": "^1.0.0-beta.15",
+    "react-datepicker": "^2.10.0",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "surge": "^0.21.3",
+    "typescript": "^3.7.2",
+    "universal-cookie": "^4.0.2",
+    "yup": "^0.27.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "react-test-renderer": "^16.11.0"
+  }
+}

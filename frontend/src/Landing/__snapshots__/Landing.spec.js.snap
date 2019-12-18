@@ -1,0 +1,244 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Landing snapshot renders 1`] = `
+<div>
+  <nav
+    className="navbar navbar-expand navbar-dark bg-dark"
+  >
+    <span
+      className="navbar-brand"
+    >
+      Yo
+    </span>
+    <button
+      aria-label="Toggle navigation"
+      className="navbar-toggler collapsed"
+      onClick={[Function]}
+      type="button"
+    >
+      <span
+        className="navbar-toggler-icon"
+      />
+    </button>
+    <div
+      aria-expanded={null}
+      className="justify-content-end navbar-collapse collapse"
+    >
+      <div>
+        <form
+          className=""
+          onSubmit={[Function]}
+        >
+          <div
+            className="form-row"
+          >
+            <div
+              className="form-group col"
+            >
+              <input
+                className="form-control"
+                id="logEmail"
+                name="email"
+                onChange={[Function]}
+                placeholder="Enter email"
+                type="email"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group col"
+            >
+              <input
+                className="form-control"
+                id="logPass"
+                name="password"
+                onChange={[Function]}
+                placeholder="Password"
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              className="form-group col"
+            >
+              <button
+                className="btn btn-primary"
+                disabled={false}
+                type="submit"
+              >
+                Log In
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <div
+    className="bg-landing"
+  >
+    <div
+      className="less jumbotron"
+    >
+      <h1>
+        Register
+      </h1>
+      <form
+        className=""
+        noValidate={true}
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="registerEmail"
+          >
+            Email address
+          </label>
+          <input
+            className="form-control"
+            id="registerEmail"
+            name="email"
+            onChange={[Function]}
+            placeholder="Enter email"
+            type="email"
+            value=""
+          />
+          <div
+            className="valid-feedback"
+          >
+            Looks good!
+          </div>
+          <div
+            className="invalid-feedback"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="registerName"
+          >
+            Display Name
+          </label>
+          <input
+            className="form-control"
+            id="registerName"
+            name="name"
+            onChange={[Function]}
+            placeholder="Enter display Name"
+            type="text"
+            value=""
+          />
+          <div
+            className="valid-feedback"
+          >
+            Looks good!
+          </div>
+          <div
+            className="invalid-feedback"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="registerPhone"
+          >
+            Phone Number
+          </label>
+          <input
+            className="form-control"
+            id="registerPhone"
+            name="phone"
+            onChange={[Function]}
+            placeholder="111-111-1111"
+            type="text"
+            value=""
+          />
+          <div
+            className="invalid-feedback"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="registerZip"
+          >
+            Zip Code
+          </label>
+          <input
+            className="form-control"
+            id="registerZip"
+            name="zip"
+            onChange={[Function]}
+            placeholder="Zip"
+            type="text"
+            value=""
+          />
+          <div
+            className="invalid-feedback"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="registerPass"
+          >
+            Password
+          </label>
+          <input
+            className="form-control"
+            id="registerPass"
+            name="password"
+            onChange={[Function]}
+            placeholder="Password"
+            type="password"
+            value=""
+          />
+          <div
+            className="invalid-feedback"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="form-label"
+            htmlFor="registerPassCmf"
+          >
+            Confirm Password
+          </label>
+          <input
+            className="form-control"
+            id="registerPassCmf"
+            name="passCmf"
+            onChange={[Function]}
+            placeholder="Confirm Password"
+            type="password"
+            value=""
+          />
+          <div
+            className="invalid-feedback"
+          />
+        </div>
+        <button
+          className="btn btn-primary"
+          disabled={false}
+          type="submit"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

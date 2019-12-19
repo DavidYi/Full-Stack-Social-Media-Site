@@ -1,19 +1,11 @@
 // this is profile.js which contains all user profile 
 // information except passwords which is in auth.js
 const models = require('./model.js');
-const cloudinary = require('cloudinary');
 const uploadImage = require('./uploadCloudinary');
 
-const profile = {
-        username: 'dcy2',
-        headline: 'This is my headline!',
-        email: 'foo@bar.com',
-        zipcode: '12345',
-        dob: '128999122000',
-        avatar: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/4e/DWLeebron.jpg/220px-DWLeebron.jpg',
-    };
-
+//find the Profile by the username with specified filter and then execute callback 
 function findByUsername(user, filter, callback) {
+    //if there is a filter, then it means that they are looking for the specified and nothing else
     if (filter) filter += " -_id";
     else filter = "";
 
@@ -22,6 +14,7 @@ function findByUsername(user, filter, callback) {
     });
 }
 
+//find the Profile by the usernae and update it and then execute the callback 
 function findAndUpdateByUsername (username, update, callback) {
     models.Profile.findOneAndUpdate({username: username}, update, { new : true })
         .exec( function(err, post) {
@@ -29,6 +22,7 @@ function findAndUpdateByUsername (username, update, callback) {
         });
 }
 
+//get the Headline (is used in the GET /headline/:user? endpoint)
 const getHeadline = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -39,10 +33,13 @@ const getHeadline = (req, res, next) => {
             throw new Error('No user found with username ' + req.params.user);
         }).catch(next);
     };
+
+    //check if user was included in the url if not then current username
     const username = req.params.user ? req.params.user : req.username;
     findByUsername(username, "username status", callback);
 }
 
+//updates the current user's headline (is used in the PUT /headline endpoint)
 const putHeadline = (req, res) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -56,11 +53,12 @@ const putHeadline = (req, res) => {
 
     let body = req.body;
     let newHeadline = body.headline;
+    //if the newHeadLine is not an empty string and is defined
     if (newHeadline !== "" && newHeadline)
         findAndUpdateByUsername(req.username, {status: newHeadline}, callback);
 }
 
-
+//get the email (is used in the GET /email/:user? endpoint)
 const getEmail = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -76,6 +74,7 @@ const getEmail = (req, res, next) => {
     findByUsername(username, "username email", callback);
 }
 
+//update the current user's email (is used in the PUT /email endpoint)
 const putEmail = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -93,6 +92,7 @@ const putEmail = (req, res, next) => {
         findAndUpdateByUsername(req.username, {email: newEmail}, callback);
 }
 
+//get the zipcode (is used in the GET /zipcode/:user? endpoint)
 const getZipCode = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -108,6 +108,7 @@ const getZipCode = (req, res, next) => {
     findByUsername(username, "username zipcode", callback);
 }
 
+//update the current user's zipcode (is used in the PUT /zipcode endpoint)
 const putZipCode = (req, res) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -125,6 +126,7 @@ const putZipCode = (req, res) => {
         findAndUpdateByUsername(req.username, {zipcode: newZip}, callback);
 }
 
+//get the date of birth (is used in the GET /DOB/:user? endpoint)
 const getDOB = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -140,7 +142,7 @@ const getDOB = (req, res, next) => {
     findByUsername(username, "username dob", callback);
 }
 
-
+//get the Avatar image url (is used in the GET /avatar/:user? endpoint)
 const getAvatar = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);
@@ -157,6 +159,7 @@ const getAvatar = (req, res, next) => {
     findByUsername(username, "username avatar", callback);
 }
 
+//update the current user's avatar url link (is used in the PUT /avatar endpoint)
 const putAvatar = (req, res) => {
 
     const callback = (err, user) => {
@@ -175,6 +178,7 @@ const putAvatar = (req, res) => {
     findAndUpdateByUsername(req.username, {avatar: req.fileurl}, callback);
 }
 
+//get the whole profile info (is used in the GET /profile/:user? endpoint)
 const getProfile = (req, res, next) => {
     const callback = (err, user) => {
         if (err) return next(err);

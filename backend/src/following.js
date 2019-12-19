@@ -1,5 +1,6 @@
 const models = require('./model.js');
 
+//find the Profile by the username with specified filter and then execute callback 
 function findByUsername(user, filter, callback) {
     if (filter && filter !== "") filter += " -_id";
     else filter = "";
@@ -9,6 +10,7 @@ function findByUsername(user, filter, callback) {
     });
 }
 
+//find the Profile by the usernae and update it and then execute the callback 
 function findAndUpdateByUsername (username, update, callback) {
     models.Profile.findOneAndUpdate({username: username}, update, { new : true })
         .exec( function(err, post) {
@@ -16,6 +18,7 @@ function findAndUpdateByUsername (username, update, callback) {
         });
 }
 
+//get the followers (is used in the GET /following/:user? endpoint)
 const getFollowings = (req, res, next) => {
 	const username = req.params.user ? req.params.user : req.username;
 
@@ -32,6 +35,7 @@ const getFollowings = (req, res, next) => {
     findByUsername(username, "username following", callback);
 }
 
+//add a followers (is used in the PUT /follower endpoint)
 const putFollowings = (req, res, next) => {
 	const username = req.params.user;
 
@@ -46,6 +50,8 @@ const putFollowings = (req, res, next) => {
         }).catch(next);
     };
 
+    //check if the username has a user associated and if it does then add the follower by pushing
+    // into the array of followers
 	const checkUsername = (err, user) => {
 		if (err) return next(err);
 
@@ -57,8 +63,10 @@ const putFollowings = (req, res, next) => {
         }).catch(next);
 	}
 
+    //count the number of profiles with the username, req.username (current user), with a follower, username
     models.Profile.count({username: req.username, following: username}, function (err, count) {
         if (count === 0) {
+            //if zero then that means that the current user does not have a follower with the username
             findByUsername(username, "", checkUsername);
         } else {
             res.status(404).send({error: "friend with username " + username + " already exists"});
@@ -66,6 +74,7 @@ const putFollowings = (req, res, next) => {
     });
 }
 
+//delete a follower (is used in the DELETE /following/:user endpoint)
 const deleteFollowings = (req, res, next) => {
 	const username = req.params.user;
 
@@ -79,6 +88,8 @@ const deleteFollowings = (req, res, next) => {
         }).catch(next);
     };
 
+    //check if there is a profile associated with the username 
+    // and if there is then pop it from the array of followers
 	const checkUsername = (err, user) => {
 		if (err) return next(err);
 

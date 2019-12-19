@@ -5,12 +5,14 @@ require('./db.js');
 //Define a schema
 const Schema = mongoose.Schema;
 
+//user auth schema
 const userSchema = new Schema({
 	username: {type: String, required: true },
 	salt: {type: String, required: true },
 	hash: {type: String, required: true },
 });
 
+//profile schema
 const profileSchema = new Schema({
 	username: {type: String, required: true },
     status: {type: String, default: "This is my headline!" },
@@ -21,12 +23,14 @@ const profileSchema = new Schema({
     avatar: {type: String, required: true }
 });
 
+//comment schema
 const commentSchema = new Schema({
     author: {type: String, required: true },
     body: {type: String, required: true },
     date: {type: Date, default: new Date().getTime() }
 });
 
+//article schema
 const postSchema = new Schema({
     author: {type: String, required: true },
     body: {type: String, required: true },

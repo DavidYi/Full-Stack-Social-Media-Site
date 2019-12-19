@@ -2,31 +2,35 @@ const models = require('./model.js');
 
 const uploadImage = require('./uploadCloudinary');
 
-var articles = [];
-
-function findPostById (selector, callback) {
+//find the Articles by the specified selector and then execute callback 
+function findPostBySelector (selector, callback) {
+    //sort it by the date from latest to earliest
     models.Post.find(selector).sort({date: -1}).exec(function(err, posts) {
         callback(err, posts);
     });
 }
 
+//find a profile with the specified username  and then execute callback 
 function findProfileByUsername(user, filter, callback) {
+    //if filter exists then we dont want the id as well
     if (filter && filter !== "") filter += " -_id";
     else filter = "";
 
+    //find one profile with that username (should be only one anyways)
     models.Profile.findOne({ username: user }, filter).exec(function(err, user) {
         callback(err, user);
     });
 }
 
-
-function findPostAndUpdateById (selector, update, callback) {
+//update post by a selector and then execute callback
+function findPostAndUpdateBySelector (selector, update, callback) {
     models.Post.findOneAndUpdate(selector, update, { new: true })
         .exec( function(err, post) {
             callback(err, post);
         });
 }
 
+//find the articles by an id, which could be the author, postId, or nothing (used for GET /articles/id? endpoint)
 const getArticles = (req, res, next) => {
     let id = req.params.id;
 
@@ -40,19 +44,21 @@ const getArticles = (req, res, next) => {
         }).catch(next);
     }
 
+    //check if its the postid or if its looking for posts by the authors
     if (id){
         const selector = require('mongoose').Types.ObjectId.isValid(id) 
             ? { $or: [ { _id: id }, { author: id } ] } 
             : { author: id };
-        findPostById( selector, 
+        findPostBySelector( selector, 
             callback('No posts found with id or username ' + req.params.id));
     }
+    // otherwise we are getting all posts
     else{
         const callbackFollowing = (err, user) => {
             if (err) return next(err);
 
             if (user) {
-                findPostById({ 
+                findPostBySelector({ 
                         $or: [ {author: user["username"]}, {author: {$in: user["following"]}} ]
                     }, callback("something went wrong with returning all posts"));
             } else Promise.resolve().then(function () {
@@ -66,6 +72,7 @@ const getArticles = (req, res, next) => {
     }
 }
 
+//update Article or update/create comment depending on what the id means (used for PUT /articles/:id endpoint)
 const putArticles = (req, res, next) => {
     let id = req.params.id;
     let article = req.body;
@@ -92,8 +99,8 @@ const putArticles = (req, res, next) => {
             }).catch(next);
     }
 
-    if (!commentId) {
-        findPostAndUpdateById({ _id: id, author: req.username }, { body: text },function(err, post) {
+    if (!commentId) {//update post
+        findPostAndUpdateBySelector({ _id: id, author: req.username }, { body: text },function(err, post) {
             if (err) return next(err);
 
             if (post) res.send({ articles: post });
@@ -111,7 +118,7 @@ const putArticles = (req, res, next) => {
         }, function (err, comment) {
             if (err) return next(err);
 
-            findPostAndUpdateById({ _id: id }, {
+            findPostAndUpdateBySelector({ _id: id }, {
             $push: {
                 comments: {
                     $each: [comment], 
@@ -119,11 +126,13 @@ const putArticles = (req, res, next) => {
                 } 
             }}, callback("could not find post with id " + id + " and create new comment"));
         });
-    } else
-        findPostAndUpdateById({ _id: id, "comments._id": commentId, "comments.author": req.username }, {$set: {"comments.$.body": text}}, 
+    }//update comment
+     else
+        findPostAndUpdateBySelector({ _id: id, "comments._id": commentId, "comments.author": req.username }, {$set: {"comments.$.body": text}}, 
             callback("could not find post with id " + id + " and commentId " + commentId  + " with author " + req.username))
 }
 
+//create new article (used for POST /article and /articleP (article with image) endpoint)
 const postArticle = (req, res, next) => {
     let article = req.body;
     let text = article.text;
@@ -142,6 +151,7 @@ const postArticle = (req, res, next) => {
         date: new Date().getTime()
     });
 
+    //if the endpoint was articleP then there should be a req.fileurl through uploadImage middleware
     if (req.fileurl) newPost['picture'] = req.fileurl;
 
     newPost.save(function (err) {

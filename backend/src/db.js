@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 
-// replace this "localhost" value with the one from heroku/mlab
-var url = 'mongodb://localhost:27017/webdev';
+let url = "";
 
-
+//get from .env.json
 if (process.env.NODE_ENV !== "production") {
     require('dot-env');
 }

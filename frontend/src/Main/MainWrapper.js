@@ -14,7 +14,7 @@ export class MainWrapper extends React.Component {
 			username: "",
 			friends: [],
 			readyII: false,
-			comments: [],//TODO: hardcoded
+			comments: [],
 		}
 	}
 

@@ -10,30 +10,6 @@ import * as yup from 'yup';
 
 import './profile.scss';
 
-/*
-
-<Form.Group controlId="uploadImage">
-		      		<Form.Label>Image</Form.Label>
-		      		<Form.Control
-		      		type="file"
-		      		name="avatar"
-					onChange={handleChange}
-					isInvalid={!!errors.avatar}
-					value={values.avatar}
-					/>
-		      		<Form.Control.Feedback type="invalid">
-		      			{errors.avatar}
-		      		</Form.Control.Feedback>
-	      		</Form.Group>
-
-	      		<div className="form-group">
-					<label for="avatar">Upload Avatar</label>
-					<input id="avatar" name="avatar" type="file" 
-						onChange={handleImageChange} className="form-control" />
-				</div>
-
-*/
-
 class Current extends React.Component {
 	constructor(props) {
 		super(props);
